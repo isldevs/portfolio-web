@@ -2,6 +2,23 @@
 
 Next.js App Router application for Yi Sivlay's public portfolio, technical articles, and authenticated content management console. This repository deploys independently from `isldevs/portfolio-backend`; the versioned REST API is the integration boundary. The design uses near-black surfaces, mint accents, compact monospaced navigation, and terminal-style panels. No reference image was supplied with the implementation brief, so the written visual specification guides the design.
 
+## Manage content
+
+Append `/admin/login` to the website address to open the administrator sign-in screen. The public footer also links to **Admin login**. Keep the backend and PostgreSQL running while signing in or editing content.
+
+There are no default credentials. On a fresh installation, set your own `ADMIN_USERNAME` and `ADMIN_PASSWORD` before the backend's first startup, following the backend README's secure bootstrap instructions. Passwords must contain at least 14 characters and fit within 72 UTF-8 bytes. Bootstrap creates the initial account only; changing those variables does not change an existing account. Use **Security** after signing in to change your password.
+
+In the prepared cloud workspace only, development credentials already exist in the protected `/workspace/.runtime/dev.env` file. Retrieve them privately in your own terminal/editor; do not paste that file or its values into chat or logs. Fresh clones do not include this file and need credentials you choose yourself.
+
+After signing in:
+
+1. Open **Projects → Add project** to add work, or **Blog posts → Add article** to write a post.
+2. Enter the title, slug, summary, content, and relevant details. Use **Save draft** to keep the item private; use **Publish project** or **Publish article** when it is ready for visitors.
+3. Use **Profile**, **Experience**, **Skills**, and **Case studies** to maintain the rest of the portfolio. Add only verified personal and professional information.
+4. Use **Media library** for images and résumé files, **Messages** for the contact inbox, and **Settings** for site configuration. **Categories** and **Tags** organize content.
+
+Content is saved in PostgreSQL. Published changes appear on the public website without rebuilding or redeploying the frontend. See [architecture and API details](docs/architecture.md) and the [launch checklist](docs/launch-checklist.md).
+
 ## Run locally
 
 Install Node.js 22 LTS or newer, npm, and the backend prerequisites in the backend README. No Docker is needed. Start PostgreSQL and the Spring Boot backend first.

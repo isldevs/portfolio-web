@@ -49,7 +49,10 @@ test('public routes, accessible navigation, filters, and responsive layout', asy
   await expect(page.getByText('Please enter a valid email address.')).toBeVisible();
   await page.goto('/projects?q=NoMatchingProjectXYZ');
   await expect(page.getByText(/no .*found|no .*match/i).first()).toBeVisible();
-  await page.goto('/admin');
+  await page
+    .getByRole('contentinfo')
+    .getByRole('link', { name: 'Admin login', exact: true })
+    .click();
   await expect(page).toHaveURL(/\/admin\/login/);
   await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible();
   await page.goto('/does-not-exist');

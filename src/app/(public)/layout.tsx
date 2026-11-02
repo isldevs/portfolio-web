@@ -35,6 +35,9 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <a href="https://github.com/isldevs" target="_blank" rel="noopener noreferrer">
               <GitBranch size={14} /> GitHub <ArrowUpRight size={12} />
             </a>
+            <Link href="/admin/login" prefetch={false}>
+              Admin login
+            </Link>
           </div>
           <small>© {new Date().getUTCFullYear()} Yi Sivlay. All systems considered.</small>
         </footer>
