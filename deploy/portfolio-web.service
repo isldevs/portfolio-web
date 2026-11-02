@@ -1,0 +1,27 @@
+[Unit]
+Description=Yi Sivlay portfolio Next.js application
+After=network.target
+
+[Service]
+Type=simple
+User=portfolio-web
+Group=portfolio-web
+WorkingDirectory=/srv/portfolio/web/current
+EnvironmentFile=/etc/portfolio/web.env
+Environment=NODE_ENV=production
+Environment=HOSTNAME=127.0.0.1
+Environment=PORT=3000
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+# Standalone rendering can write cache files in its release directory.
+ReadWritePaths=/srv/portfolio/web/releases
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

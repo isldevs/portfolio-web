@@ -1,0 +1,35 @@
+name: Package frontend release
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Unique release ID (letters, digits, dot, dash, underscore)
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build verified standalone artifact
+        env:
+          RELEASE_ID: ${{ inputs.release_id }}
+          API_BASE_URL: http://127.0.0.1:8080
+          # Configure the repository variable before packaging production metadata.
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          test -n "$SITE_URL" || { echo 'Set repository variable SITE_URL to the production HTTPS origin'; exit 1; }
+          mkdir -p dist
+          ./deploy/package-release.sh "$RELEASE_ID" "$PWD/dist/portfolio-web.tar.gz"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-web-release
+          path: dist/*
+          if-no-files-found: error
