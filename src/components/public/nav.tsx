@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import Link, { useLinkStatus } from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -10,6 +10,10 @@ const links = [
   ['04', 'Blog', '/blog'],
   ['05', 'Contact', '/contact'],
 ];
+function NavigationFeedback() {
+  const { pending } = useLinkStatus();
+  return <span className="nav-pending" data-pending={pending} aria-hidden="true" />;
+}
 export function Nav() {
   const path = usePathname();
   const [open, setOpen] = useState(false);
@@ -33,11 +37,13 @@ export function Nav() {
           <Link
             key={url}
             href={url}
+            aria-current={(url === '/' ? path === '/' : path.startsWith(url)) ? 'page' : undefined}
             className={(url === '/' ? path === '/' : path.startsWith(url)) ? 'active' : ''}
             onClick={() => setOpen(false)}
           >
             <small>{n}_</small>
             {name.toUpperCase()}
+            <NavigationFeedback />
           </Link>
         ))}
       </nav>

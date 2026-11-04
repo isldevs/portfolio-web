@@ -10,7 +10,11 @@ import { z } from 'zod';
 import { Copy, Eye, History, Save, Upload } from 'lucide-react';
 import { Content, dateText, errorText, Media, request, Resource, resources } from './api';
 import { Heading, Loading, Notice } from './ui';
-import RichEditor from './rich-editor';
+import dynamic from 'next/dynamic';
+
+const RichEditor = dynamic(() => import('./rich-editor'), {
+  loading: () => <p role="status">Loading editor…</p>,
+});
 
 type Draft = Pick<
   Content,

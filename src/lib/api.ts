@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { createPortfolioClient } from './generated/client';
 export type JsonValue =
   string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
@@ -89,6 +90,19 @@ export async function publicApi<T>(
   path: string,
   params?: Record<string, string | number | undefined>,
 ): Promise<T> {
+  // Request-scoped memoization shares metadata/page reads without serving stale CMS data.
+  const query = JSON.stringify(
+    Object.entries(params || {})
+      .filter(([, value]) => value !== undefined)
+      .sort(([a], [b]) => a.localeCompare(b)),
+  );
+  return (await readPublicApi(path, query)) as T;
+}
+const readPublicApi = cache(async (path: string, query: string): Promise<unknown> => {
+  const params = Object.fromEntries(JSON.parse(query)) as Record<
+    string,
+    string | number | undefined
+  >;
   const client = createPortfolioClient(process.env.API_BASE_URL || 'http://127.0.0.1:8080');
   const parts = path.replace(/^\/+/, '').split('/');
   const options = { cache: 'no-store' as RequestCache, signal: AbortSignal.timeout(8000) };
@@ -111,8 +125,8 @@ export async function publicApi<T>(
         ? 'Content not found.'
         : 'Content service is temporarily unavailable.',
     );
-  return result.data as T;
-}
+  return result.data;
+});
 export function textField(data: Record<string, JsonValue>, key: string): string {
   const value = data[key];
   return typeof value === 'string' ? value : '';

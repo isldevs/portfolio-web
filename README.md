@@ -34,6 +34,14 @@ Open the application at port 3000 on your own development machine. Public server
 
 The admin sign-in screen is `/admin/login`. Bootstrap an administrator using the backend instructions; this application contains no built-in credentials. Authentication uses HTTP-only server sessions with CSRF protection, never browser local-storage tokens.
 
+## Navigation speed and motion
+
+`npm run dev` uses Turbopack for incremental development. The first visit to a route still compiles it; development timings do not represent visitor performance. `npm run dev:webpack` is available for bundler troubleshooting.
+
+For a production speed check, stop the development server, run `npm run build`, then `npm start`. Production routes are compiled during the build. Use this mode for demos and performance measurements. `npm start` assembles static assets alongside the standalone server before starting it. Set `PORT` if port 3000 is already in use. The API and database must be running in either mode. Public content remains live (`no-store`); request-scoped memoization shares duplicate metadata/page reads without caching content between requests. Browser metadata can stream, while Next.js retains its default crawler handling.
+
+Public pages have short entrance and viewport reveals, subtle ambient hero motion, and hover/focus feedback. Animations never delay navigation or hide server-rendered content while waiting for JavaScript. Reduced-motion preferences disable motion, including when changed during a session. Heavy syntax highlighting is limited to the supported CMS languages, and the admin editor loads in its own chunk.
+
 ## Checks
 
 ```powershell

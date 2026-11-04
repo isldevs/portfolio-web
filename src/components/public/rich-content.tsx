@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Fragment, ReactNode } from 'react';
-import { codeToHtml } from 'shiki';
 import { RichNode, plainText, safeUrl, safeLink } from '@/lib/api';
 import { CopyCode } from './reader-tools';
 import { Diagram } from './diagram';
@@ -107,7 +106,8 @@ export async function RichContent({ body }: { body: RichNode | null }) {
         if (language === 'mermaid') return <Diagram key={index} code={code} />;
         let html = '';
         try {
-          html = await codeToHtml(code, {
+          const { highlightCode } = await import('@/lib/highlight');
+          html = await highlightCode(code, {
             lang: [
               'java',
               'sql',
