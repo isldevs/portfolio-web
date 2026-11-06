@@ -53,7 +53,7 @@ export default function AdminShell({
     <div className="admin-frame">
       <aside id="admin-navigation" className={`admin-sidebar ${open ? 'is-open' : ''}`} aria-label="Admin navigation">
         <Link className="admin-brand" href="/admin">
-          <span>&lt;/&gt;</span> ISL_ADMIN
+          <span>&lt;/&gt;</span> YI SIVLAY
           <span className="admin-dot" />
         </Link>
         <p className="admin-eyebrow">{'// ADMIN_CONSOLE'}</p>

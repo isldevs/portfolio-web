@@ -210,7 +210,7 @@ export default async function Home() {
                 </p>
               ))}
               <p className="terminal-prompt">
-                <span>yi@portfolio</span>:~$ <span className="cursor">▍</span>
+                <span>sivlay.yi@portfolio</span>:~$ <span className="cursor">▍</span>
               </p>
             </div>
           </section>

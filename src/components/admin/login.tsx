@@ -39,7 +39,7 @@ export default function Login() {
   return (
     <main className="admin-login">
       <Link className="admin-brand" href="/">
-        <span>&lt;/&gt;</span> ISL_ADMIN
+        <span>&lt;/&gt;</span> YI SIVLAY
       </Link>
       <div className="admin-login-card">
         <div className="admin-login-icon">
