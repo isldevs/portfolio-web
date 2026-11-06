@@ -44,7 +44,7 @@ export default function Settings() {
           body: { type: 'doc', content: [] },
           status: 'PUBLISHED',
           featured: false,
-          displayOrder: 0,
+          display_order: 0,
         }),
         data: { ...item?.data, services: parse(services), tools: parse(tools) },
       };
@@ -98,7 +98,9 @@ export default function Settings() {
                   value={tools}
                   onChange={(event) => setChanges({ services, tools: event.target.value })}
                 />
-                <small id="tools-hint">One tool per line. Keep names descriptive and accurate.</small>
+                <small id="tools-hint">
+                  One tool per line. Keep names descriptive and accurate.
+                </small>
               </label>
             </div>
             <div className="admin-alert">

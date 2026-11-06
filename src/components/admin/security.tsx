@@ -12,8 +12,8 @@ import { Heading, Notice } from './ui';
 
 const schema = z
   .object({
-    currentPassword: z.string().min(1, 'Enter your current password.'),
-    newPassword: z
+    current_password: z.string().min(1, 'Enter your current password.'),
+    new_password: z
       .string()
       .min(14, 'Use at least 14 characters.')
       .refine(
@@ -22,7 +22,7 @@ const schema = z
       ),
     confirmPassword: z.string(),
   })
-  .refine((value) => value.newPassword === value.confirmPassword, {
+  .refine((value) => value.new_password === value.confirmPassword, {
     message: 'Passwords must match.',
     path: ['confirmPassword'],
   });
@@ -40,8 +40,8 @@ export default function Security() {
       await request('/admin/auth/password', {
         method: 'POST',
         body: JSON.stringify({
-          currentPassword: values.currentPassword,
-          newPassword: values.newPassword,
+          current_password: values.current_password,
+          new_password: values.new_password,
         }),
       });
       form.reset();
@@ -69,20 +69,20 @@ export default function Security() {
           <label>
             Current password
             <input
-              {...form.register('currentPassword')}
+              {...form.register('current_password')}
               type="password"
               autoComplete="current-password"
             />
           </label>
-          {form.formState.errors.currentPassword && (
-            <p className="admin-field-error">{form.formState.errors.currentPassword.message}</p>
+          {form.formState.errors.current_password && (
+            <p className="admin-field-error">{form.formState.errors.current_password.message}</p>
           )}
           <label>
             New password
-            <input {...form.register('newPassword')} type="password" autoComplete="new-password" />
+            <input {...form.register('new_password')} type="password" autoComplete="new-password" />
           </label>
-          {form.formState.errors.newPassword && (
-            <p className="admin-field-error">{form.formState.errors.newPassword.message}</p>
+          {form.formState.errors.new_password && (
+            <p className="admin-field-error">{form.formState.errors.new_password.message}</p>
           )}
           <label>
             Confirm new password

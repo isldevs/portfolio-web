@@ -12,7 +12,7 @@ export default function ContentList({ resource }: { resource: Resource }) {
   const client = useQueryClient();
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('');
-  const [sort, setSort] = useState('updatedAt,desc');
+  const [sort, setSort] = useState('updated_at,desc');
   const [page, setPage] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
   const [error, setError] = useState('');
@@ -119,9 +119,9 @@ export default function ContentList({ resource }: { resource: Resource }) {
               setPage(0);
             }}
           >
-            <option value="updatedAt,desc">Recently updated</option>
+            <option value="updated_at,desc">Recently updated</option>
             <option value="title,asc">Title A–Z</option>
-            <option value="displayOrder,asc">Display order</option>
+            <option value="display_order,asc">Display order</option>
           </select>
         </div>
         {selected.length > 0 && (
@@ -208,7 +208,7 @@ export default function ContentList({ resource }: { resource: Resource }) {
                           </span>
                         </td>
                         <td>{String(item.data?.category || '—')}</td>
-                        <td>{dateText(item.updatedAt)}</td>
+                        <td>{dateText(item.updated_at)}</td>
                         <td>
                           <div className="admin-row-actions">
                             <Link
@@ -235,8 +235,8 @@ export default function ContentList({ resource }: { resource: Resource }) {
               </div>
               <Pagination
                 page={page}
-                pages={query.data.totalPages}
-                total={query.data.totalElements}
+                pages={query.data.total_pages}
+                total={query.data.total_elements}
                 setPage={setPage}
               />
             </>

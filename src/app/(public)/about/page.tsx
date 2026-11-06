@@ -26,21 +26,21 @@ export default async function About() {
         <div>
           <ProfilePortrait profile={profile} />
           <div className="detail-links" style={{ marginTop: 25 }}>
-            <External href={profile.githubUrl}>GitHub</External>
-            <External href={profile.linkedinUrl}>LinkedIn</External>
+            <External href={profile.github_url}>GitHub</External>
+            <External href={profile.linkedin_url}>LinkedIn</External>
           </div>
         </div>
         <div className="about-copy">
           <span className="eyebrow">{'// HELLO_WORLD'}</span>
           <h2 style={{ marginTop: 15 }}>
-            I&apos;m {profile.fullName}
+            I&apos;m {profile.full_name}
             <span className="accent">.</span>
           </h2>
-          <p>{profile.fullBio || profile.shortBio}</p>
+          <p>{profile.full_bio || profile.short_bio}</p>
           <dl className="about-facts">
             <div>
               <dt>ROLE</dt>
-              <dd>{profile.professionalTitle}</dd>
+              <dd>{profile.professional_title}</dd>
             </div>
             <div>
               <dt>LOCATION</dt>

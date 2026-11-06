@@ -8,16 +8,16 @@ export type Content = {
   data: Record<string, unknown>;
   status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
   featured: boolean;
-  displayOrder: number;
+  display_order: number;
   version: number;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt?: string;
+  created_at: string;
+  updated_at: string;
+  published_at?: string;
 };
 export type Page<T> = {
   content: T[];
-  totalElements: number;
-  totalPages: number;
+  total_elements: number;
+  total_pages: number;
   number: number;
   size: number;
 };
@@ -25,11 +25,11 @@ export type Profile = { id: string; version: number; [key: string]: string | num
 export type Media = {
   id: string;
   url: string;
-  originalName: string;
-  contentType: string;
+  original_name: string;
+  content_type: string;
   size: number;
   visibility?: 'PUBLIC' | 'PRIVATE';
-  createdAt: string;
+  created_at: string;
 };
 export type Message = {
   id: string;
@@ -39,7 +39,7 @@ export type Message = {
   message: string;
   status: 'UNREAD' | 'READ' | 'RESOLVED' | 'ARCHIVED';
   version: number;
-  createdAt: string;
+  created_at: string;
 };
 
 export class ApiError extends Error {
@@ -60,8 +60,8 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     const response = await fetch('/api/v1/csrf', { credentials: 'same-origin', cache: 'no-store' });
     if (!response.ok)
       throw new ApiError(response.status, 'Unable to establish a secure session. Please retry.');
-    const csrf = (await response.json()) as { headerName: string; token: string };
-    headers.set(csrf.headerName, csrf.token);
+    const csrf = (await response.json()) as { header_name: string; token: string };
+    headers.set(csrf.header_name, csrf.token);
   }
   const response = await fetch(`/api/v1${path}`, {
     ...options,

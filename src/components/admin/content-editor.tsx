@@ -18,12 +18,12 @@ const RichEditor = dynamic(() => import('./rich-editor'), {
 
 type Draft = Pick<
   Content,
-  'title' | 'slug' | 'summary' | 'body' | 'data' | 'status' | 'featured' | 'displayOrder'
+  'title' | 'slug' | 'summary' | 'body' | 'data' | 'status' | 'featured' | 'display_order'
 > & { version?: number };
 type Revision = {
   id: string;
   title?: string;
-  createdAt?: string;
+  created_at?: string;
   version?: number;
   content?: Content;
 };
@@ -34,7 +34,7 @@ const schema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a lowercase URL slug with hyphens.')
     .max(180),
   summary: z.string().max(4000),
-  displayOrder: z.number().int().min(0).max(100000),
+  display_order: z.number().int().min(0).max(100000),
 });
 const initial: Draft = {
   title: '',
@@ -44,7 +44,7 @@ const initial: Draft = {
   data: {},
   status: 'DRAFT',
   featured: false,
-  displayOrder: 0,
+  display_order: 0,
 };
 const arrayFields = new Set([
   'technologies',
@@ -59,62 +59,62 @@ const longFields = new Set([
   'problem',
   'solution',
   'architecture',
-  'databaseDesign',
-  'securityConsiderations',
-  'engineeringDecisions',
+  'database_design',
+  'security_considerations',
+  'engineering_decisions',
   'challenges',
-  'tradeOffs',
-  'lessonsLearned',
+  'trade_offs',
+  'lessons_learned',
   'outcomes',
-  'technicalApproach',
+  'technical_approach',
   'description',
 ]);
 const fieldGroups: Record<Resource, [string, string][]> = {
   projects: [
     ['category', 'Category'],
     ['technologies', 'Technologies (comma separated)'],
-    ['coverImage', 'Cover image URL'],
+    ['cover_image', 'Cover image URL'],
     ['gallery', 'Gallery URLs (comma separated)'],
-    ['githubUrl', 'GitHub URL'],
-    ['demoUrl', 'Demo URL'],
+    ['github_url', 'GitHub URL'],
+    ['demo_url', 'Demo URL'],
     ['problem', 'Problem statement'],
     ['solution', 'Solution'],
     ['architecture', 'Architecture'],
     ['features', 'Features (comma separated)'],
-    ['databaseDesign', 'Database design'],
-    ['securityConsiderations', 'Security considerations'],
-    ['engineeringDecisions', 'Engineering decisions'],
+    ['database_design', 'Database design'],
+    ['security_considerations', 'Security considerations'],
+    ['engineering_decisions', 'Engineering decisions'],
     ['challenges', 'Challenges'],
-    ['tradeOffs', 'Trade-offs'],
-    ['lessonsLearned', 'Lessons learned'],
+    ['trade_offs', 'Trade-offs'],
+    ['lessons_learned', 'Lessons learned'],
   ],
   blog: [
     ['category', 'Category'],
     ['tags', 'Tags (comma separated)'],
     ['author', 'Author'],
-    ['coverImage', 'Cover image URL'],
-    ['canonicalUrl', 'Canonical URL'],
+    ['cover_image', 'Cover image URL'],
+    ['canonical_url', 'Canonical URL'],
   ],
   'case-studies': [
-    ['relatedProject', 'Related project ID'],
+    ['related_project', 'Related project ID'],
     ['technologies', 'Technologies (comma separated)'],
     ['problem', 'Problem'],
     ['architecture', 'Architecture'],
-    ['technicalApproach', 'Technical approach'],
-    ['engineeringDecisions', 'Engineering decisions'],
-    ['securityConsiderations', 'Security'],
+    ['technical_approach', 'Technical approach'],
+    ['engineering_decisions', 'Engineering decisions'],
+    ['security_considerations', 'Security'],
     ['challenges', 'Challenges'],
-    ['tradeOffs', 'Trade-offs'],
+    ['trade_offs', 'Trade-offs'],
     ['outcomes', 'Outcomes (verified facts only)'],
-    ['lessonsLearned', 'Lessons learned'],
+    ['lessons_learned', 'Lessons learned'],
     ['images', 'Image URLs (comma separated)'],
   ],
   experience: [
     ['company', 'Company'],
     ['location', 'Location'],
-    ['employmentType', 'Employment type'],
-    ['startDate', 'Start date'],
-    ['endDate', 'End date (blank if current)'],
+    ['employment_type', 'Employment type'],
+    ['start_date', 'Start date'],
+    ['end_date', 'End date (blank if current)'],
     ['responsibilities', 'Responsibilities (comma separated)'],
     ['technologies', 'Technologies (comma separated)'],
     ['achievements', 'Verified achievements (comma separated)'],
@@ -136,7 +136,7 @@ function draftOf(item: Content): Draft {
     data: item.data || {},
     status: item.status,
     featured: item.featured,
-    displayOrder: item.displayOrder,
+    display_order: item.display_order,
     version: item.version,
   };
 }
@@ -262,7 +262,7 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
       const data = new FormData();
       data.set('file', file);
       const asset = await request<Media>('/admin/media', { method: 'POST', body: data });
-      changeData('coverImage', asset.url);
+      changeData('cover_image', asset.url);
       setSuccess('Cover uploaded. Save your content to apply it.');
     } catch (failure) {
       setError(errorText(failure));
@@ -362,7 +362,7 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
                       <li key={revision.id}>
                         <span>
                           {revision.title || `Revision ${revisions.data.length - index}`}{' '}
-                          <small>{dateText(revision.createdAt)}</small>
+                          <small>{dateText(revision.created_at)}</small>
                         </span>
                         <button
                           type="button"
@@ -493,9 +493,9 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
                       <label className="admin-check">
                         <input
                           type="checkbox"
-                          checked={Boolean(draft.data.currentlyEmployed)}
+                          checked={Boolean(draft.data.currently_employed)}
                           onChange={(event) =>
-                            changeData('currentlyEmployed', event.target.checked)
+                            changeData('currently_employed', event.target.checked)
                           }
                         />
                         Currently employed
@@ -532,8 +532,8 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
                           type="number"
                           min={0}
                           max={100000}
-                          value={draft.displayOrder}
-                          onChange={(event) => change('displayOrder', Number(event.target.value))}
+                          value={draft.display_order}
+                          onChange={(event) => change('display_order', Number(event.target.value))}
                         />
                       </label>
                       <p className="admin-hint">
@@ -583,8 +583,8 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
                         SEO title
                         <input
                           maxLength={200}
-                          value={String(draft.data.seoTitle || '')}
-                          onChange={(event) => changeData('seoTitle', event.target.value)}
+                          value={String(draft.data.seo_title || '')}
+                          onChange={(event) => changeData('seo_title', event.target.value)}
                         />
                       </label>
                       <label>
@@ -592,8 +592,8 @@ export default function ContentEditor({ resource, id }: { resource: Resource; id
                         <textarea
                           maxLength={320}
                           rows={3}
-                          value={String(draft.data.seoDescription || '')}
-                          onChange={(event) => changeData('seoDescription', event.target.value)}
+                          value={String(draft.data.seo_description || '')}
+                          onChange={(event) => changeData('seo_description', event.target.value)}
                         />
                       </label>
                     </section>

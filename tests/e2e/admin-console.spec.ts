@@ -9,7 +9,7 @@ async function login(page: Page) {
   expect(csrfResponse.ok()).toBeTruthy();
   const csrf = await csrfResponse.json();
   const response = await page.request.post('/api/v1/admin/auth/login', {
-    headers: { [csrf.headerName]: csrf.token },
+    headers: { [csrf.header_name]: csrf.token },
     data: { username: process.env.ADMIN_USERNAME, password: process.env.ADMIN_PASSWORD },
   });
   expect(response.status()).toBe(200);
@@ -66,14 +66,14 @@ test('admin screens, profile persistence, settings, private media and responsive
     } else await page.goto('/admin/profile');
 
     await expect(page.getByLabel('Full name', { exact: true })).not.toHaveValue('');
-    const fullName = await page.getByLabel('Full name', { exact: true }).inputValue();
+    const full_name = await page.getByLabel('Full name', { exact: true }).inputValue();
     await page.getByRole('button', { name: 'Preview', exact: true }).click();
-    await expect(page.getByRole('heading', { name: fullName, exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: full_name, exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Edit profile', exact: true }).click();
     await page.getByRole('button', { name: 'Save profile', exact: true }).click();
     await expect(page.getByRole('status')).toContainText('Profile saved');
     await page.reload();
-    await expect(page.getByLabel('Full name', { exact: true })).toHaveValue(fullName);
+    await expect(page.getByLabel('Full name', { exact: true })).toHaveValue(full_name);
 
     await page.goto('/admin/settings');
     await expect(page.getByLabel('Services', { exact: true })).toBeVisible();
@@ -126,7 +126,7 @@ test('admin screens, profile persistence, settings, private media and responsive
     if (csrfResponse.ok()) {
       const csrf = await csrfResponse.json();
       await page.request.post('/api/v1/admin/auth/logout', {
-        headers: { [csrf.headerName]: csrf.token },
+        headers: { [csrf.header_name]: csrf.token },
       });
     }
   }

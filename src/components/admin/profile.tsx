@@ -8,18 +8,18 @@ import { errorText, Media, Profile, request } from './api';
 import { Heading, Loading, Notice } from './ui';
 
 const fields = [
-  ['fullName', 'Full name', 'text'],
-  ['professionalTitle', 'Professional title', 'text'],
+  ['full_name', 'Full name', 'text'],
+  ['professional_title', 'Professional title', 'text'],
   ['headline', 'Headline', 'text'],
   ['location', 'Location', 'text'],
   ['specialization', 'Specialization', 'text'],
   ['availability', 'Availability', 'text'],
-  ['publicEmail', 'Public email', 'email'],
-  ['githubUrl', 'GitHub URL', 'url'],
-  ['linkedinUrl', 'LinkedIn URL', 'url'],
-  ['portraitUrl', 'Portrait URL', 'text'],
-  ['resumeUrl', 'Resume PDF URL', 'text'],
-  ['seoTitle', 'SEO title', 'text'],
+  ['public_email', 'Public email', 'email'],
+  ['github_url', 'GitHub URL', 'url'],
+  ['linkedin_url', 'LinkedIn URL', 'url'],
+  ['portrait_url', 'Portrait URL', 'text'],
+  ['resume_url', 'Resume PDF URL', 'text'],
+  ['seo_title', 'SEO title', 'text'],
 ];
 export default function ProfileEditor() {
   const client = useQueryClient();
@@ -106,11 +106,11 @@ export default function ProfileEditor() {
         (preview ? (
           <section className="admin-panel admin-profile-preview">
             <span className="admin-eyebrow">{'// PUBLIC_PROFILE_PREVIEW'}</span>
-            <h2>{values.fullName}</h2>
-            <h3>{values.professionalTitle}</h3>
+            <h2>{values.full_name}</h2>
+            <h3>{values.professional_title}</h3>
             <p className="admin-accent">{values.headline}</p>
-            <p>{values.shortBio}</p>
-            <p>{values.fullBio}</p>
+            <p>{values.short_bio}</p>
+            <p>{values.full_bio}</p>
             <p>
               {values.location} · {values.availability || 'Availability not specified'}
             </p>
@@ -124,7 +124,7 @@ export default function ProfileEditor() {
                   <input
                     type={type}
                     {...form.register(name, {
-                      required: ['fullName', 'professionalTitle', 'headline'].includes(name),
+                      required: ['full_name', 'professional_title', 'headline'].includes(name),
                       maxLength: 1000,
                     })}
                   />
@@ -137,36 +137,36 @@ export default function ProfileEditor() {
             </div>
             <label>
               Short biography
-              <textarea rows={3} maxLength={2000} {...form.register('shortBio')} />
+              <textarea rows={3} maxLength={2000} {...form.register('short_bio')} />
             </label>
             <label>
               Full biography
-              <textarea rows={7} maxLength={20000} {...form.register('fullBio')} />
+              <textarea rows={7} maxLength={20000} {...form.register('full_bio')} />
             </label>
             <label>
               SEO description
-              <textarea rows={2} maxLength={320} {...form.register('seoDescription')} />
+              <textarea rows={2} maxLength={320} {...form.register('seo_description')} />
             </label>
             <div className="admin-upload-row">
               <label className="admin-button secondary">
                 <Upload size={15} />
-                {uploading === 'portraitUrl' ? 'Uploading…' : 'Upload portrait'}
+                {uploading === 'portrait_url' ? 'Uploading…' : 'Upload portrait'}
                 <input
                   type="file"
                   accept="image/png,image/jpeg,image/webp,image/gif"
                   disabled={!!uploading}
-                  onChange={(event) => upload(event.target.files?.[0], 'portraitUrl')}
+                  onChange={(event) => upload(event.target.files?.[0], 'portrait_url')}
                   hidden
                 />
               </label>
               <label className="admin-button secondary">
                 <Upload size={15} />
-                {uploading === 'resumeUrl' ? 'Uploading…' : 'Upload resume'}
+                {uploading === 'resume_url' ? 'Uploading…' : 'Upload resume'}
                 <input
                   type="file"
                   accept="application/pdf"
                   disabled={!!uploading}
-                  onChange={(event) => upload(event.target.files?.[0], 'resumeUrl')}
+                  onChange={(event) => upload(event.target.files?.[0], 'resume_url')}
                   hidden
                 />
               </label>

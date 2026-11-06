@@ -22,7 +22,7 @@ if (!process.env.OPENAPI_FILE) {
   const csrf = await call('/api/v1/csrf');
   await call('/api/v1/admin/auth/login', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', [csrf.headerName]: csrf.token },
+    headers: { 'Content-Type': 'application/json', [csrf.header_name]: csrf.token },
     body: JSON.stringify({
       username: process.env.ADMIN_USERNAME,
       password: process.env.ADMIN_PASSWORD,
@@ -34,7 +34,7 @@ if (!process.env.OPENAPI_FILE) {
   const logoutCsrf = await call('/api/v1/csrf');
   await call('/api/v1/admin/auth/logout', {
     method: 'POST',
-    headers: { [logoutCsrf.headerName]: logoutCsrf.token },
+    headers: { [logoutCsrf.header_name]: logoutCsrf.token },
   });
 }
 const result = spawnSync(

@@ -49,6 +49,10 @@ For a production speed check, stop the development server, run `npm run build`, 
 
 Public pages have short entrance and viewport reveals, subtle ambient hero motion, and hover/focus feedback. Animations never delay navigation or hide server-rendered content while waiting for JavaScript. Reduced-motion preferences disable motion, including when changed during a session. Heavy syntax highlighting is limited to the supported CMS languages, and the admin editor loads in its own chunk.
 
+## API compatibility
+
+This version sends and reads snake_case API JSON (for example `full_name`, `display_order`, and `total_elements`). Use the matching snake_case `portfolio-backend` release. Deploy both together. Rich-text editor documents retain their existing format; see [technical maintenance](docs/technical-maintenance.md#snake_case-api-contract).
+
 ## Checks
 
 ```powershell

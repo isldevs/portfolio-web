@@ -44,7 +44,7 @@ export default function MediaLibrary() {
     }
   }
   async function remove(item: Media) {
-    if (!window.confirm(`Delete “${item.originalName}”? Referenced files cannot be deleted.`))
+    if (!window.confirm(`Delete “${item.original_name}”? Referenced files cannot be deleted.`))
       return;
     setError('');
     setSuccess('');
@@ -133,12 +133,12 @@ export default function MediaLibrary() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Preview ${item.originalName}`}
+                      aria-label={`Preview ${item.original_name}`}
                     >
-                      {item.contentType.startsWith('image/') ? (
+                      {item.content_type.startsWith('image/') ? (
                         <Image
                           src={item.url}
-                          alt={item.originalName}
+                          alt={item.original_name}
                           width={640}
                           height={360}
                           unoptimized
@@ -148,17 +148,17 @@ export default function MediaLibrary() {
                       )}
                     </a>
                     <div className="admin-media-details">
-                      <h2 title={item.originalName}>{item.originalName}</h2>
+                      <h2 title={item.original_name}>{item.original_name}</h2>
                       <span
                         className={`admin-status ${item.visibility === 'PRIVATE' ? 'draft' : 'published'}`}
                       >
                         {item.visibility || 'PUBLIC'}
                       </span>
                       <p>
-                        {(item.size / 1024).toFixed(1)} KB · {dateText(item.createdAt)}
+                        {(item.size / 1024).toFixed(1)} KB · {dateText(item.created_at)}
                       </p>
                       <input
-                        aria-label={`URL for ${item.originalName}`}
+                        aria-label={`URL for ${item.original_name}`}
                         value={item.url}
                         readOnly
                         onFocus={(event) => event.target.select()}
@@ -172,7 +172,7 @@ export default function MediaLibrary() {
                           className="admin-icon-button danger"
                           disabled={busy}
                           onClick={() => remove(item)}
-                          aria-label={`Delete ${item.originalName}`}
+                          aria-label={`Delete ${item.original_name}`}
                         >
                           <Trash2 size={15} />
                         </button>
@@ -183,8 +183,8 @@ export default function MediaLibrary() {
               </div>
               <Pagination
                 page={page}
-                pages={query.data.totalPages}
-                total={query.data.totalElements}
+                pages={query.data.total_pages}
+                total={query.data.total_elements}
                 setPage={setPage}
               />
             </>

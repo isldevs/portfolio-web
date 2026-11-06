@@ -19,35 +19,35 @@ export interface ContentItem {
   data: Record<string, JsonValue>;
   status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
   featured: boolean;
-  displayOrder: number;
+  display_order: number;
   version: number;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt?: string | null;
+  created_at: string;
+  updated_at: string;
+  published_at?: string | null;
 }
 export interface Profile {
   id: string;
   version: number;
-  fullName: string;
-  professionalTitle: string;
+  full_name: string;
+  professional_title: string;
   headline: string;
-  shortBio: string;
-  fullBio: string;
+  short_bio: string;
+  full_bio: string;
   location: string;
   specialization: string;
   availability: string;
-  githubUrl: string;
-  linkedinUrl: string;
-  publicEmail: string;
-  portraitUrl: string;
-  resumeUrl: string;
-  seoTitle: string;
-  seoDescription: string;
+  github_url: string;
+  linkedin_url: string;
+  public_email: string;
+  portrait_url: string;
+  resume_url: string;
+  seo_title: string;
+  seo_description: string;
 }
 export interface Page<T> {
   content: T[];
-  totalElements: number;
-  totalPages: number;
+  total_elements: number;
+  total_pages: number;
   number: number;
   size: number;
 }
@@ -69,7 +69,7 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     if (!response.ok)
       throw new ApiError(response.status, 'Could not establish a secure session. Please retry.');
     const csrf = await response.json();
-    headers.set(csrf.headerName, csrf.token);
+    headers.set(csrf.header_name, csrf.token);
   }
   const response = await fetch(path.startsWith('/api/') ? path : `/api/v1${path}`, {
     ...options,

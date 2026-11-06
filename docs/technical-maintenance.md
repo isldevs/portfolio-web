@@ -119,3 +119,11 @@ For a frontend-only regression, the operator can reactivate a retained compatibl
 - Live release IDs, backend origin, persistent storage paths, backup schedule, and last restore test are recorded.
 - Release/rollback procedure and HTTPS renewal are verified on the actual host.
 - Every new feature includes owner instructions, a feature-map update, and relevant technical/test documentation.
+
+## Snake_case API contract
+
+The website consumes and sends snake_case JSON directly. Examples: `profile.full_name`, `item.display_order`, `page.total_elements`, `csrf.header_name`, and `media.original_name`. CMS metadata also uses keys such as `cover_image_url`, `currently_employed`, and `related_project`. Update public/admin types, forms, tests, and generated schema when adding API fields.
+
+The editor document in `body` keeps Tiptap's protocol, including `codeBlock`, `bulletList`, and its attribute names. Browser/Next.js options and JSON-LD vocabulary retain their required external names. Do not apply a blanket key renamer to those formats.
+
+Backend storage keys remain unchanged; the backend handles conversion and older revision snapshots. Release the frontend and backend together because the old camelCase client does not match the new API. Regenerate API types with `npm run generate:api` against the updated backend, supplying schema-export credentials privately, or use the documented `OPENAPI_FILE` mode.

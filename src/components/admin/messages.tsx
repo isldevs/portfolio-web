@@ -173,7 +173,7 @@ export default function Messages() {
                             {item.status}
                           </span>
                         </td>
-                        <td>{dateText(item.createdAt)}</td>
+                        <td>{dateText(item.created_at)}</td>
                         <td>
                           <button
                             className="admin-icon-button danger"
@@ -191,8 +191,8 @@ export default function Messages() {
               </div>
               <Pagination
                 page={page}
-                pages={query.data.totalPages}
-                total={query.data.totalElements}
+                pages={query.data.total_pages}
+                total={query.data.total_elements}
                 setPage={setPage}
               />
             </>
@@ -234,7 +234,7 @@ export default function Messages() {
             <p>
               {selected.name} · <a href={`mailto:${selected.email}`}>{selected.email}</a>
             </p>
-            <p className="admin-hint">{dateText(selected.createdAt)}</p>
+            <p className="admin-hint">{dateText(selected.created_at)}</p>
             <div className="admin-message-body">{selected.message}</div>
             <div className="admin-dialog-actions">
               <select

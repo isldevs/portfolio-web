@@ -11,7 +11,7 @@ export default async function Resume() {
   } catch {
     return <ServiceUnavailable />;
   }
-  const url = safeUrl(profile.resumeUrl);
+  const url = safeUrl(profile.resume_url);
   return (
     <div className="page-content">
       <PageIntro
@@ -21,11 +21,11 @@ export default async function Resume() {
       />
       <section className="resume-panel panel">
         <FileText size={30} className="accent" />
-        <h2 style={{ marginTop: 20 }}>{profile.fullName}</h2>
+        <h2 style={{ marginTop: 20 }}>{profile.full_name}</h2>
         <p>
-          {profile.professionalTitle} / {profile.location}
+          {profile.professional_title} / {profile.location}
         </p>
-        <p>{profile.shortBio}</p>
+        <p>{profile.short_bio}</p>
         {url ? (
           <a href={url} className="button" download>
             Download résumé <ArrowDownToLine size={15} />

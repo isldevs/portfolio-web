@@ -25,8 +25,8 @@ export default async function Experience() {
           {result.content.map((item) => (
             <article className="experience-card" key={item.id}>
               <span className="dates">
-                {textField(item.data, 'startDate')} —{' '}
-                {item.data.currentlyEmployed ? 'Present' : textField(item.data, 'endDate')}
+                {textField(item.data, 'start_date')} —{' '}
+                {item.data.currently_employed ? 'Present' : textField(item.data, 'end_date')}
               </span>
               <h2>{item.title}</h2>
               <p className="company">

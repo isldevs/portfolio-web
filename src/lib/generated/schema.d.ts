@@ -408,7 +408,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        ContentDto: {
+        ContentRequest: {
             /** Format: uuid */
             id?: string;
             kind?: string;
@@ -424,23 +424,67 @@ export interface components {
             status?: string;
             featured?: boolean;
             /** Format: int32 */
-            displayOrder?: number;
+            display_order?: number;
             /** Format: int64 */
             version?: number;
             /** Format: date-time */
-            createdAt?: string;
+            created_at?: string;
             /** Format: date-time */
-            updatedAt?: string;
+            updated_at?: string;
             /** Format: date-time */
-            publishedAt?: string;
+            published_at?: string;
         };
-        Update: {
+        ContentResponse: {
+            /** Format: uuid */
+            id?: string;
+            kind?: string;
+            title?: string;
+            slug?: string;
+            summary?: string;
+            body?: components["schemas"]["JsonNode"];
+            data?: components["schemas"]["JsonNode"];
+            status?: string;
+            featured?: boolean;
+            /** Format: int32 */
+            display_order?: number;
+            /** Format: int64 */
+            version?: number;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+            /** Format: date-time */
+            published_at?: string;
+        };
+        JsonNode: unknown;
+        ProfileResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: int64 */
+            version?: number;
+            full_name?: string;
+            professional_title?: string;
+            headline?: string;
+            short_bio?: string;
+            full_bio?: string;
+            location?: string;
+            specialization?: string;
+            availability?: string;
+            github_url?: string;
+            linkedin_url?: string;
+            public_email?: string;
+            portrait_url?: string;
+            resume_url?: string;
+            seo_title?: string;
+            seo_description?: string;
+        };
+        MessageUpdateRequest: {
             /** @enum {string} */
             status: "UNREAD" | "READ" | "RESOLVED" | "ARCHIVED";
             /** Format: int64 */
             version: number;
         };
-        Message: {
+        MessageResponse: {
             /** Format: uuid */
             id?: string;
             name?: string;
@@ -452,9 +496,9 @@ export interface components {
             /** Format: int64 */
             version?: number;
             /** Format: date-time */
-            createdAt?: string;
+            created_at?: string;
         };
-        Submission: {
+        ContactRequest: {
             name: string;
             /** Format: email */
             email: string;
@@ -462,35 +506,109 @@ export interface components {
             message: string;
             website?: string;
         };
-        VersionBody: {
+        SubmissionResponse: {
+            /** Format: uuid */
+            id?: string;
+            message?: string;
+        };
+        VersionRequest: {
             /** Format: int64 */
             version?: number;
         };
-        Asset: {
+        MediaResponse: {
             /** Format: uuid */
             id?: string;
             url?: string;
-            originalName?: string;
-            contentType?: string;
+            original_name?: string;
+            content_type?: string;
             /** Format: int64 */
             size?: number;
             /** @enum {string} */
             visibility?: "PUBLIC" | "PRIVATE";
             /** Format: date-time */
-            createdAt?: string;
+            created_at?: string;
         };
-        PasswordChange: {
-            currentPassword: string;
-            newPassword?: string;
+        PasswordChangeRequest: {
+            current_password: string;
+            new_password?: string;
         };
-        Login: {
+        LoginRequest: {
             username: string;
             password: string;
         };
-        CsrfToken: {
-            parameterName?: string;
+        UserResponse: {
+            username?: string;
+            role?: string;
+        };
+        PageResponseContentResponse: {
+            content?: components["schemas"]["ContentResponse"][];
+            /** Format: int64 */
+            total_elements?: number;
+            /** Format: int32 */
+            total_pages?: number;
+            /** Format: int32 */
+            number?: number;
+            /** Format: int32 */
+            size?: number;
+        };
+        CsrfResponse: {
             token?: string;
-            headerName?: string;
+            header_name?: string;
+        };
+        PageResponseMessageResponse: {
+            content?: components["schemas"]["MessageResponse"][];
+            /** Format: int64 */
+            total_elements?: number;
+            /** Format: int32 */
+            total_pages?: number;
+            /** Format: int32 */
+            number?: number;
+            /** Format: int32 */
+            size?: number;
+        };
+        PageResponseMediaResponse: {
+            content?: components["schemas"]["MediaResponse"][];
+            /** Format: int64 */
+            total_elements?: number;
+            /** Format: int32 */
+            total_pages?: number;
+            /** Format: int32 */
+            number?: number;
+            /** Format: int32 */
+            size?: number;
+        };
+        AuditResponse: {
+            /** Format: uuid */
+            id?: string;
+            action?: string;
+            resource?: string;
+            resource_id?: string;
+            actor?: string;
+            /** Format: date-time */
+            created_at?: string;
+        };
+        DashboardResponse: {
+            /** Format: int64 */
+            total_projects?: number;
+            /** Format: int64 */
+            published_projects?: number;
+            /** Format: int64 */
+            total_articles?: number;
+            /** Format: int64 */
+            published_articles?: number;
+            /** Format: int64 */
+            draft_articles?: number;
+            /** Format: int64 */
+            unread_messages?: number;
+            recent_activity?: components["schemas"]["AuditResponse"][];
+        };
+        RevisionResponse: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: date-time */
+            created_at?: string;
+            actor?: string;
+            snapshot?: components["schemas"]["ContentResponse"];
         };
     };
     responses: never;
@@ -519,7 +637,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -536,7 +654,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ContentDto"];
+                "application/json": components["schemas"]["ContentRequest"];
             };
         };
         responses: {
@@ -546,7 +664,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -589,9 +707,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["ProfileResponse"];
                 };
             };
         };
@@ -617,9 +733,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["ProfileResponse"];
                 };
             };
         };
@@ -641,7 +755,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Message"];
+                    "*/*": components["schemas"]["MessageResponse"];
                 };
             };
         };
@@ -657,7 +771,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Update"];
+                "application/json": components["schemas"]["MessageUpdateRequest"];
             };
         };
         responses: {
@@ -667,7 +781,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Message"];
+                    "*/*": components["schemas"]["MessageResponse"];
                 };
             };
         };
@@ -701,7 +815,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Submission"];
+                "application/json": components["schemas"]["ContactRequest"];
             };
         };
         responses: {
@@ -711,7 +825,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": Record<string, never>;
+                    "*/*": components["schemas"]["SubmissionResponse"];
                 };
             };
         };
@@ -728,7 +842,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["VersionBody"];
+                "application/json": components["schemas"]["VersionRequest"];
             };
         };
         responses: {
@@ -738,7 +852,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -755,7 +869,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["VersionBody"];
+                "application/json": components["schemas"]["VersionRequest"];
             };
         };
         responses: {
@@ -765,7 +879,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -788,7 +902,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -820,9 +934,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["PageResponseContentResponse"];
                 };
             };
         };
@@ -838,7 +950,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ContentDto"];
+                "application/json": components["schemas"]["ContentRequest"];
             };
         };
         responses: {
@@ -848,7 +960,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -872,9 +984,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["PageResponseMediaResponse"];
                 };
             };
         };
@@ -903,7 +1013,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["Asset"];
+                    "*/*": components["schemas"]["MediaResponse"];
                 };
             };
         };
@@ -917,7 +1027,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["PasswordChange"];
+                "application/json": components["schemas"]["PasswordChangeRequest"];
             };
         };
         responses: {
@@ -957,7 +1067,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["Login"];
+                "application/json": components["schemas"]["LoginRequest"];
             };
         };
         responses: {
@@ -967,9 +1077,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: string;
-                    };
+                    "*/*": components["schemas"]["UserResponse"];
                 };
             };
         };
@@ -986,7 +1094,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["VersionBody"];
+                "application/json": components["schemas"]["VersionRequest"];
             };
         };
         responses: {
@@ -996,7 +1104,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -1027,9 +1135,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["PageResponseContentResponse"];
                 };
             };
         };
@@ -1052,7 +1158,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["ContentDto"];
+                    "*/*": components["schemas"]["ContentResponse"];
                 };
             };
         };
@@ -1072,9 +1178,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["ProfileResponse"];
                 };
             };
         };
@@ -1103,9 +1207,7 @@ export interface operations {
     };
     csrf: {
         parameters: {
-            query: {
-                token: components["schemas"]["CsrfToken"];
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -1118,9 +1220,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: string;
-                    };
+                    "*/*": components["schemas"]["CsrfResponse"];
                 };
             };
         };
@@ -1145,9 +1245,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["PageResponseMessageResponse"];
                 };
             };
         };
@@ -1189,9 +1287,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    };
+                    "*/*": components["schemas"]["DashboardResponse"];
                 };
             };
         };
@@ -1211,9 +1307,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: string;
-                    };
+                    "*/*": components["schemas"]["UserResponse"];
                 };
             };
         };
@@ -1233,9 +1327,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    }[];
+                    "*/*": components["schemas"]["AuditResponse"][];
                 };
             };
         };
@@ -1257,9 +1349,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": {
-                        [key: string]: unknown;
-                    }[];
+                    "*/*": components["schemas"]["RevisionResponse"][];
                 };
             };
         };

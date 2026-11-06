@@ -12,8 +12,8 @@ export function createPortfolioClient(baseUrl = '') {
           cache: 'no-store',
         });
         if (!response.ok) throw new Error('Could not establish CSRF protection.');
-        const csrf = (await response.json()) as { headerName: string; token: string };
-        request.headers.set(csrf.headerName, csrf.token);
+        const csrf = (await response.json()) as { header_name: string; token: string };
+        request.headers.set(csrf.header_name, csrf.token);
       }
       return request;
     },

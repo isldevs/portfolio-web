@@ -42,14 +42,14 @@ export default async function Contact() {
               />
               {profile.location}
             </span>
-            {profile.publicEmail && (
-              <a href={`mailto:${profile.publicEmail}`}>
-                {profile.publicEmail}
+            {profile.public_email && (
+              <a href={`mailto:${profile.public_email}`}>
+                {profile.public_email}
                 <ArrowUpRight size={13} />
               </a>
             )}
-            {safeUrl(profile.githubUrl) && (
-              <a href={safeUrl(profile.githubUrl)} rel="noopener noreferrer" target="_blank">
+            {safeUrl(profile.github_url) && (
+              <a href={safeUrl(profile.github_url)} rel="noopener noreferrer" target="_blank">
                 GitHub / isldevs <ArrowUpRight size={13} />
               </a>
             )}

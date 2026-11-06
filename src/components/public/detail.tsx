@@ -26,15 +26,15 @@ export async function detailMetadata(resource: string, slug: string) {
   const route = resource === 'articles' ? 'blog' : resource;
   try {
     const item = await getItem(resource, slug);
-    const image = safeUrl(item.data.coverImage || item.data.coverImageUrl);
+    const image = safeUrl(item.data.cover_image || item.data.cover_image_url);
     return {
       ...pageMetadata(
-        textField(item.data, 'seoTitle') || item.title,
-        textField(item.data, 'seoDescription') || item.summary,
+        textField(item.data, 'seo_title') || item.title,
+        textField(item.data, 'seo_description') || item.summary,
         `/${route}/${item.slug}`,
       ),
       alternates: {
-        canonical: safeUrl(item.data.canonicalUrl) || siteUrl(`/${route}/${item.slug}`),
+        canonical: safeUrl(item.data.canonical_url) || siteUrl(`/${route}/${item.slug}`),
       },
       openGraph: {
         title: item.title,
@@ -66,7 +66,7 @@ export async function Detail({
     route = isBlog ? 'blog' : resource,
     label = isBlog ? 'Field notes' : resource === 'projects' ? 'Projects' : 'Case studies';
   const toc = headings(item.body),
-    cover = safeUrl(item.data.coverImage || item.data.coverImageUrl);
+    cover = safeUrl(item.data.cover_image || item.data.cover_image_url);
   let related: ContentItem[] = [],
     previous: ContentItem | undefined,
     next: ContentItem | undefined,
@@ -85,21 +85,21 @@ export async function Detail({
     } catch {}
   }
   const fields = [
-    ['Problem statement', 'problemStatement'],
+    ['Problem statement', 'problem_statement'],
     ['Problem', 'problem'],
-    ['Technical context', 'technicalContext'],
+    ['Technical context', 'technical_context'],
     ['Solution', 'solution'],
     ['Architecture', 'architecture'],
-    ['API design', 'apiDesign'],
-    ['Database design', 'databaseDesign'],
-    ['Security considerations', 'securityConsiderations'],
-    ['Engineering decisions', 'engineeringDecisions'],
+    ['API design', 'api_design'],
+    ['Database design', 'database_design'],
+    ['Security considerations', 'security_considerations'],
+    ['Engineering decisions', 'engineering_decisions'],
     ['Challenges', 'challenges'],
-    ['Trade-offs', 'tradeOffs'],
+    ['Trade-offs', 'trade_offs'],
     ['Outcomes', 'outcomes'],
-    ['Lessons learned', 'lessonsLearned'],
+    ['Lessons learned', 'lessons_learned'],
   ].filter(([, key]) => textField(item.data, key));
-  const author = textField(item.data, 'author') || profile?.fullName || '';
+  const author = textField(item.data, 'author') || profile?.full_name || '';
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -127,8 +127,8 @@ export async function Detail({
               '@type': 'BlogPosting',
               headline: item.title,
               description: item.summary,
-              datePublished: item.publishedAt,
-              dateModified: item.updatedAt,
+              datePublished: item.published_at,
+              dateModified: item.updated_at,
               author: { '@type': 'Person', name: author },
               mainEntityOfPage: siteUrl(`/blog/${item.slug}`),
               ...(cover ? { image: siteUrl(cover) } : {}),
@@ -157,9 +157,9 @@ export async function Detail({
             </span>
           )}
           {isBlog && author && <span>By {author}</span>}
-          <span>{dateLabel(item.publishedAt)}</span>
+          <span>{dateLabel(item.published_at)}</span>
           {isBlog && <span>{readingTime(item.body)} min read</span>}
-          {isBlog && item.updatedAt && <span>Updated {dateLabel(item.updatedAt)}</span>}
+          {isBlog && item.updated_at && <span>Updated {dateLabel(item.updated_at)}</span>}
         </div>
       </header>
       <div className={isBlog ? 'article-layout' : ''}>
@@ -184,8 +184,8 @@ export async function Detail({
           ) : null}
           {!isBlog && (
             <div className="detail-links">
-              <External href={textField(item.data, 'githubUrl')}>View source</External>
-              <External href={textField(item.data, 'demoUrl')}>Live demo</External>
+              <External href={textField(item.data, 'github_url')}>View source</External>
+              <External href={textField(item.data, 'demo_url')}>Live demo</External>
             </div>
           )}
           <RichContent body={item.body} />

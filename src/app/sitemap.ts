@@ -20,11 +20,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         total = 1;
       do {
         const result = await publicApi<Page<ContentItem>>(`/${resource}`, { page, size: 100 });
-        total = result.totalPages;
+        total = result.total_pages;
         entries.push(
           ...result.content.map((item) => ({
             url: siteUrl(`/${resource === 'articles' ? 'blog' : resource}/${item.slug}`),
-            lastModified: new Date(item.updatedAt),
+            lastModified: new Date(item.updated_at),
           })),
         );
         page++;

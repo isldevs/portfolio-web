@@ -14,7 +14,7 @@ async function mutation(api: APIRequestContext, path: string, method: string, da
   const csrf = await csrfResponse.json();
   return api.fetch(`/api/v1${path}`, {
     method,
-    headers: { [csrf.headerName]: csrf.token },
+    headers: { [csrf.header_name]: csrf.token },
     ...(data !== undefined ? { data } : {}),
   });
 }
@@ -91,7 +91,7 @@ test('secure publishing, drafts, conflicts, revisions, contact inbox and logout'
         summary: 'Automated integration verification content.',
         status: 'DRAFT',
         featured: false,
-        displayOrder: 100,
+        display_order: 100,
         body: {
           type: 'doc',
           content: [

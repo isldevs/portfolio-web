@@ -11,17 +11,17 @@ type Activity = {
   action?: string;
   resource?: string;
   actor?: string;
-  createdAt?: string;
+  created_at?: string;
   title?: string;
 };
 type Stats = {
-  totalProjects: number;
-  publishedProjects: number;
-  totalArticles: number;
-  publishedArticles: number;
-  draftArticles: number;
-  unreadMessages: number;
-  recentActivity: Activity[];
+  total_projects: number;
+  published_projects: number;
+  total_articles: number;
+  published_articles: number;
+  draft_articles: number;
+  unread_messages: number;
+  recent_activity: Activity[];
 };
 export default function Dashboard() {
   const query = useQuery({
@@ -49,28 +49,28 @@ export default function Dashboard() {
               {[
                 {
                   label: 'Projects',
-                  value: query.data.totalProjects,
-                  detail: `${query.data.publishedProjects} published`,
+                  value: query.data.total_projects,
+                  detail: `${query.data.published_projects} published`,
                   icon: FolderGit2,
                   href: '/admin/projects',
                 },
                 {
                   label: 'Articles',
-                  value: query.data.totalArticles,
-                  detail: `${query.data.publishedArticles} published`,
+                  value: query.data.total_articles,
+                  detail: `${query.data.published_articles} published`,
                   icon: FileText,
                   href: '/admin/blog',
                 },
                 {
                   label: 'Draft articles',
-                  value: query.data.draftArticles,
+                  value: query.data.draft_articles,
                   detail: 'Work in progress',
                   icon: FileText,
                   href: '/admin/blog?status=DRAFT',
                 },
                 {
                   label: 'Unread messages',
-                  value: query.data.unreadMessages,
+                  value: query.data.unread_messages,
                   detail: 'Awaiting your attention',
                   icon: Inbox,
                   href: '/admin/messages?status=UNREAD',
@@ -95,9 +95,9 @@ export default function Dashboard() {
                   <h2>Recent activity</h2>
                   <span className="admin-eyebrow">DATABASE / LIVE</span>
                 </div>
-                {query.data.recentActivity?.length ? (
+                {query.data.recent_activity?.length ? (
                   <ul className="admin-activity">
-                    {query.data.recentActivity.map((item, index) => (
+                    {query.data.recent_activity.map((item, index) => (
                       <li key={item.id || index}>
                         <span className="admin-activity-marker" />
                         <div>
@@ -107,7 +107,7 @@ export default function Dashboard() {
                             {item.actor ? ` · ${item.actor}` : ''}
                           </p>
                         </div>
-                        <time>{dateText(item.createdAt)}</time>
+                        <time>{dateText(item.created_at)}</time>
                       </li>
                     ))}
                   </ul>

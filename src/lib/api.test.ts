@@ -41,7 +41,7 @@ describe('same-origin CSRF requests', () => {
     const fetcher = vi
       .fn()
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ headerName: 'X-CSRF-TOKEN', token: 'test-csrf' }), {
+        new Response(JSON.stringify({ header_name: 'X-CSRF-TOKEN', token: 'test-csrf' }), {
           status: 200,
         }),
       )
@@ -65,7 +65,7 @@ describe('same-origin CSRF requests', () => {
       vi
         .fn()
         .mockResolvedValueOnce(
-          new Response(JSON.stringify({ token: 'x', headerName: 'X-CSRF-TOKEN' })),
+          new Response(JSON.stringify({ token: 'x', header_name: 'X-CSRF-TOKEN' })),
         )
         .mockResolvedValueOnce(
           new Response(JSON.stringify({ detail: 'Too many messages. Please try later.' }), {

@@ -126,7 +126,7 @@ export async function Listing({
       </form>
       <div className="filter-count">
         <span>
-          {String(result.totalElements).padStart(2, '0')} PUBLISHED{' '}
+          {String(result.total_elements).padStart(2, '0')} PUBLISHED{' '}
           {isBlog ? 'ENTRIES' : resource === 'projects' ? 'PROJECTS' : 'CASE STUDIES'}
         </span>
         <span>READ. QUESTION. BUILD.</span>
@@ -175,7 +175,7 @@ export async function Listing({
           }
         />
       )}
-      {result.totalPages > 1 && (
+      {result.total_pages > 1 && (
         <nav className="pagination" aria-label="Pagination">
           {page > 0 && (
             <Link className="button-secondary" href={pageHref(page - 1)}>
@@ -183,9 +183,9 @@ export async function Listing({
             </Link>
           )}
           <span>
-            Page {page + 1} of {result.totalPages}
+            Page {page + 1} of {result.total_pages}
           </span>
-          {page + 1 < result.totalPages && (
+          {page + 1 < result.total_pages && (
             <Link className="button-secondary" href={pageHref(page + 1)}>
               Next <ArrowRight size={13} />
             </Link>

@@ -128,7 +128,7 @@ export function ProjectCard({
   index?: number;
   compact?: boolean;
 }) {
-  const image = safeUrl(item.data.coverImage || item.data.coverImageUrl);
+  const image = safeUrl(item.data.cover_image || item.data.cover_image_url);
   return (
     <Link href={`/projects/${item.slug}`} className={`project-card ${compact ? 'compact' : ''}`}>
       <div className="card-meta">
@@ -174,7 +174,7 @@ export function ArticleCard({ item, index = 0 }: { item: ContentItem; index?: nu
         )}
         <p>{item.summary}</p>
         <div className="article-bottom">
-          <span>{dateLabel(item.publishedAt)}</span>
+          <span>{dateLabel(item.published_at)}</span>
           <span>
             Read entry <ArrowUpRight size={14} />
           </span>
@@ -205,7 +205,7 @@ export function CaseCard({ item }: { item: ContentItem }) {
   );
 }
 export function ProfilePortrait({ profile }: { profile: Profile }) {
-  const image = safeUrl(profile.portraitUrl);
+  const image = safeUrl(profile.portrait_url);
   return (
     <div className="portrait-frame">
       <span className="corner tl" />
@@ -213,13 +213,13 @@ export function ProfilePortrait({ profile }: { profile: Profile }) {
       <span className="corner bl" />
       <span className="corner br" />
       {image ? (
-        <Image unoptimized width={1200} height={800} src={image} alt={profile.fullName} />
+        <Image unoptimized width={1200} height={800} src={image} alt={profile.full_name} />
       ) : (
         <div className="portrait-placeholder">
           <div className="portrait-grid" />
           <Braces size={55} strokeWidth={0.8} />
           <strong>
-            {profile.fullName
+            {profile.full_name
               .split(' ')
               .map((v) => v[0])
               .join('')}

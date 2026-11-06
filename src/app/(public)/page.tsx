@@ -23,9 +23,9 @@ import {
 export async function generateMetadata() {
   try {
     const profile = await publicApi<Profile>('/profile');
-    const title = profile.seoTitle || `${profile.fullName} / ${profile.professionalTitle}`;
+    const title = profile.seo_title || `${profile.full_name} / ${profile.professional_title}`;
     return {
-      ...pageMetadata(title, profile.seoDescription || profile.shortBio, '/'),
+      ...pageMetadata(title, profile.seo_description || profile.short_bio, '/'),
       title: { absolute: title },
     };
   } catch {
@@ -68,10 +68,10 @@ export default async function Home() {
           __html: jsonLd({
             '@context': 'https://schema.org',
             '@type': 'Person',
-            name: profile.fullName,
-            jobTitle: profile.professionalTitle,
+            name: profile.full_name,
+            jobTitle: profile.professional_title,
             url: siteUrl(),
-            sameAs: [profile.githubUrl, profile.linkedinUrl].filter(Boolean),
+            sameAs: [profile.github_url, profile.linkedin_url].filter(Boolean),
             address: { '@type': 'PostalAddress', addressLocality: profile.location },
           }),
         }}
@@ -91,11 +91,11 @@ export default async function Home() {
               <span className="accent">&gt;</span> INITIALIZING_PORTFOLIO.EXE{' '}
               <span className="cursor">_</span>
             </div>
-            <p className="hero-kicker">{profile.professionalTitle}</p>
+            <p className="hero-kicker">{profile.professional_title}</p>
             <h1>
               {words.join(' ')} <span>{last}.</span>
             </h1>
-            <p className="hero-description">{profile.shortBio}</p>
+            <p className="hero-description">{profile.short_bio}</p>
             <div className="hero-actions">
               <Link className="button" href="/projects">
                 View projects <ArrowUpRight size={16} />
@@ -113,13 +113,13 @@ export default async function Home() {
             <div className="profile-data">
               <div className="eyebrow">{"// WHO'S BEHIND THE SYSTEM"}</div>
               <h2>
-                {profile.fullName}
+                {profile.full_name}
                 <span className="accent">_</span>
               </h2>
               <dl>
                 <div>
                   <dt>ROLE</dt>
-                  <dd>{profile.professionalTitle}</dd>
+                  <dd>{profile.professional_title}</dd>
                 </div>
                 <div>
                   <dt>BASED IN</dt>
@@ -199,8 +199,8 @@ export default async function Home() {
               <span className="eyebrow">&gt; SYSTEM_LOG</span>
               {[
                 'Portfolio initialized',
-                `${projects.totalElements} published projects loaded`,
-                `${articles.totalElements} published articles loaded`,
+                `${projects.total_elements} published projects loaded`,
+                `${articles.total_elements} published articles loaded`,
                 'System ready.',
               ].map((line, i) => (
                 <p key={line} className="log-line" style={{ animationDelay: `${i * 0.15}s` }}>
