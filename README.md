@@ -2,6 +2,13 @@
 
 Next.js App Router application for Yi Sivlay's public portfolio, technical articles, and authenticated content management console. This repository deploys independently from `isldevs/portfolio-backend`; the versioned REST API is the integration boundary. The design uses near-black surfaces, mint accents, compact monospaced navigation, and terminal-style panels. No reference image was supplied with the implementation brief, so the written visual specification guides the design.
 
+## Start here: maintaining your website
+
+No web development experience is needed for normal content updates. Read the **[website owner's maintenance guide](docs/maintenance.md)** for step-by-step editing, publishing, media, messages, troubleshooting, and maintenance routines.
+
+- [Every page and admin feature](docs/features.md): what each feature does and where to update it.
+- [Technical maintenance and handover](docs/technical-maintenance.md): code locations, checks, releases, configuration, and backup/recovery references for your developer or server operator.
+
 ## Manage content
 
 Append `/admin/login` to the website address to open the administrator sign-in screen. The public footer also links to **Admin login**. Keep the backend and PostgreSQL running while signing in or editing content.
