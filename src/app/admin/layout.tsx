@@ -3,7 +3,7 @@ import AdminProviders from '@/components/admin/providers';
 import './admin.css';
 
 export const metadata: Metadata = {
-  title: 'Admin console · Yi Sivlay',
+  title: 'Admin Console · Yi Sivlay',
   robots: { index: false, follow: false },
 };
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

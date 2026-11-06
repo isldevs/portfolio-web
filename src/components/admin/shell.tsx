@@ -56,7 +56,7 @@ export default function AdminShell({
           <span>&lt;/&gt;</span> YI SIVLAY
           <span className="admin-dot" />
         </Link>
-        <p className="admin-eyebrow">{'// ADMIN_CONSOLE'}</p>
+        <p className="admin-eyebrow">{'ADMIN_CONSOLE'}</p>
         <nav>
           {navigation.map(([label, href], index) => (
             <Link
@@ -76,7 +76,7 @@ export default function AdminShell({
           <Link href="/" target="_blank">
             View public site <ArrowUpRight size={14} />
           </Link>
-          <span>SESSION / AUTHENTICATED</span>
+          <span>SESSION | AUTHENTICATED</span>
         </div>
       </aside>
       <div className="admin-main">
@@ -110,7 +110,7 @@ export default function AdminShell({
           {children}
         </main>
         <footer className="admin-footer">
-          <span>ISL // CONTENT MANAGEMENT</span>
+          <span>YI SIVLAY | CONTENT MANAGEMENT</span>
           <span>Changes are persisted to your database.</span>
         </footer>
       </div>
